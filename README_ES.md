@@ -1,9 +1,9 @@
 # Sistema Alexa
 
-![Status](https://img.shields.io/badge/status-active-success)
-![Architecture](https://img.shields.io/badge/architecture-modular-blue)
-![Language](https://img.shields.io/badge/language-TypeScript-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+![Estado](https://img.shields.io/badge/status-active-success)
+![Arquitectura](https://img.shields.io/badge/architecture-modular-blue)
+![Idioma](https://img.shields.io/badge/language-TypeScript-blue)
+![Licencia](https://img.shields.io/badge/license-MIT-green)
 
 🌐 Idioma: [Español](README_ES.md) | [English](README.md)
 
