@@ -18,6 +18,18 @@ Alexa System is a modular architecture for building adaptive AI systems with:
 
 This project focuses on simulating internal processes rather than simple text generation.
 
+## 🧩 System Architecture
+
+Alexa System is built using a modular architecture where each component is responsible for a specific aspect of the AI behavior:
+
+- **Core** → Orchestrates the full conversational loop  
+- **Memory System** → Handles context and persistence  
+- **Cognitive System (Traits)** → Simulates decision-making behavior  
+- **Emotional System** → Modulates tone and interaction style  
+- **Self-Evaluation** → Enables internal feedback and evolution  
+
+This separation allows scalability, maintainability, and independent evolution of each module.
+
 ## 🧠 Why this matters
 
 Most conversational AIs are stateless and reactive.

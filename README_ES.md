@@ -18,6 +18,18 @@ Alexa System es una arquitectura modular para construir sistemas de IA adaptativ
 
 Este proyecto se centra en simular procesos internos en lugar de la simple generación de texto.
 
+## 🧩 Arquitectura del Sistema
+
+El sistema Alexa se basa en una arquitectura modular donde cada componente se encarga de un aspecto específico del comportamiento de la IA:
+
+- **Núcleo** → Orquesta el ciclo conversacional completo
+- **Sistema de Memoria** → Gestiona el contexto y la persistencia
+- **Sistema Cognitivo (Rasgos)** → Simula el comportamiento de toma de decisiones
+- **Sistema Emocional** → Modula el tono y el estilo de interacción
+- **Autoevaluación** → Permite la retroalimentación interna y la evolución
+
+Esta separación permite la escalabilidad, el mantenimiento y la evolución independiente de cada módulo.
+
 ## 🧠 Por qué es importante
 
 La mayoría de las IA conversacionales carecen de estado y son reactivas.
