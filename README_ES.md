@@ -30,6 +30,20 @@ El sistema Alexa se basa en una arquitectura modular donde cada componente se en
 
 Esta separación permite la escalabilidad, el mantenimiento y la evolución independiente de cada módulo.
 
+## ⚙️ Cómo funciona
+
+El sistema opera mediante un ciclo continuo:
+
+1. **Entrada del usuario** → Se recibe un mensaje
+2. **Construcción de contexto** → Se recopilan la memoria y el estado interno
+3. **Procesamiento cognitivo y emocional** → Los rasgos y el estado emocional influyen en el comportamiento
+4. **Generación de respuesta** → El sistema produce una salida
+5. **Autoevaluación** → La respuesta se analiza internamente
+6. **Actualización de memoria** → Se almacena la interacción
+7. **Ajuste interno** → Los rasgos y el estado emocional evolucionan
+
+Este ciclo permite un comportamiento adaptativo y una evolución continua a lo largo del tiempo.
+
 ## 🧠 Por qué es importante
 
 La mayoría de las IA conversacionales carecen de estado y son reactivas.

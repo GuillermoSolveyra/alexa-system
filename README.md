@@ -30,6 +30,20 @@ Alexa System is built using a modular architecture where each component is respo
 
 This separation allows scalability, maintainability, and independent evolution of each module.
 
+## ⚙️ How it works
+
+The system operates through a continuous loop:
+
+1. **User Input** → A message is received  
+2. **Context Building** → Memory and internal state are gathered  
+3. **Cognitive + Emotional Processing** → Traits and emotional state influence behavior  
+4. **Response Generation** → The system produces an output  
+5. **Self-Evaluation** → The response is analyzed internally  
+6. **Memory Update** → Interaction is stored  
+7. **Internal Adjustment** → Traits and emotional state evolve  
+
+This loop enables adaptive behavior and continuous evolution over time.
+
 ## 🧠 Why this matters
 
 Most conversational AIs are stateless and reactive.
