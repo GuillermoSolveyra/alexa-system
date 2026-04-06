@@ -124,7 +124,7 @@ El sistema está estructurado en módulos desacoplados:
 
 ## Flujo del sistema
 
-1. 1. Se recibe la entrada del usuario.
+1. Se recibe la entrada del usuario.
 2. Se construye el contexto (memoria + estado interno).
 3. Se activan los sistemas cognitivos y emocionales.
 4. Se genera la respuesta.
@@ -162,11 +162,22 @@ Alexa System se basa en tres principios fundamentales:
 
 ---
 
-## Estado del proyecto
+## 📌 Estado del proyecto
 
-* Arquitectura central definida
-* Sistemas principales implementados
-* Evolución continua
+Este proyecto está en constante evolución.
+
+Enfoque actual:
+- Refinamiento de los sistemas internos (memoria, rasgos, evaluación)
+- Mejora de la arquitectura modular
+- Ampliación de las aplicaciones prácticas
+
+---
+
+## ⚠️ Aviso legal
+
+Este repositorio contiene una versión pública simplificada del sistema.
+
+Se han abstraído algunos aspectos de la lógica interna y comportamientos avanzados con fines demostrativos.
 
 ---
 

@@ -160,11 +160,22 @@ Alexa System is built on three core principles:
 
 ---
 
-## Project Status
+## 📌 Project Status
 
-* Core architecture defined
-* Main systems implemented
-* Ongoing evolution
+This project is actively evolving.
+
+Current focus:
+- Refining internal systems (memory, traits, evaluation)
+- Improving modular architecture
+- Expanding real-world applications
+
+---
+
+## ⚠️ Disclaimer
+
+This repository contains a simplified public version of the system.
+
+Some internal logic and advanced behaviors have been abstracted for demonstration purposes.
 
 ---
 
