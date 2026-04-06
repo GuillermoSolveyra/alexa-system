@@ -44,17 +44,28 @@ El sistema opera mediante un ciclo continuo:
 
 Este ciclo permite un comportamiento adaptativo y una evolución continua a lo largo del tiempo.
 
+## 🎯 Casos de uso
+
+El sistema Alexa puede servir de base para:
+
+- Asistentes de IA con personalidad persistente
+- Chatbots adaptativos con memoria y evolución del comportamiento
+- Simulación de sistemas de interacción similares a los humanos
+- Investigación y experimentación en modelado del comportamiento de la IA
+
+---
+
 ## 🧠 Por qué es importante
 
-La mayoría de las IA conversacionales carecen de estado y son reactivas.
+Los chatbots tradicionales son reactivos y carecen de estado.
 
-Alexa System introduce un enfoque diferente:
+El sistema Alexa introduce:
 
-- Estado interno (memoria, rasgos, emoción)
-- Autoevaluación continua
-- Evolución del comportamiento a lo largo del tiempo
+- Estado interno (memoria, rasgos, emociones)
+- Retroalimentación continua mediante autoevaluación
+- Evolución del comportamiento a través de las interacciones
 
-Esto permite construir sistemas que simulan consistencia, adaptación e identidad.
+Esto permite sistemas de IA más consistentes, adaptativos y realistas.
 
 # Alexa System
 
