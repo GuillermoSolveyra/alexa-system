@@ -1,0 +1,6 @@
+export * from "./trait-types.js"
+export * from "./trait-weight-engine.js"
+export * from "./trait-interaction-engine.js"
+export * from "./trait-system.js"
+export * from "./trait-context-selector.js"
+export * from "./time-awareness.js"
