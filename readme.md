@@ -1,3 +1,14 @@
+## 🚀 Overview
+
+Alexa System is a modular architecture for building adaptive AI systems with:
+
+- Persistent identity  
+- Cognitive traits  
+- Emotional state  
+- Self-evaluation loops  
+
+This project focuses on simulating internal processes rather than simple text generation.
+
 # Sistema Alexa
 
 Arquitectura modular para el desarrollo de inteligencias artificiales conversacionales con identidad persistente, capacidad de evolución y comportamiento adaptativo.
