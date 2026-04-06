@@ -1,10 +1,12 @@
-🚀 Overview
+## 🚀 Overview
+
 Alexa System is a modular architecture for building adaptive AI systems with:
 
-Persistent identity
-Cognitive traits
-Emotional state
-Self-evaluation loops
+- Persistent identity  
+- Cognitive traits  
+- Emotional state  
+- Self-evaluation loops  
+
 This project focuses on simulating internal processes rather than simple text generation.
 
 ## 🧠 Why this matters
@@ -18,80 +20,128 @@ Alexa System introduces a different approach:
 
 This allows building systems that simulate consistency, adaptation, and identity.
 
-Sistema Alexa
-Arquitectura modular para el desarrollo de inteligencias artificiales conversacionales con identidad persistente, capacidad de evolución y comportamiento adaptativo.
+# Alexa System
 
-Descripción
-Sistema Alexa es un sistema diseñado para construir IAs que no solo responden, sino que mantienen coherencia, aprenden de la interacción y evolucionan en el tiempo.
+A modular architecture for building conversational AI systems with persistent identity, adaptive behavior, and continuous evolution.
 
-El enfoque principal no es únicamente la generación de texto, sino la simulación de procesos internos como memoria, evaluación, rasgos cognitivos y estado emocional.
+---
 
-Características principales
-🧠 Sistema cognitivo basado en traits (rasgos)
-💾 Memoria persistente (corto y largo plazo)
-❤️ Sistema emocional integrado
-🔁 Loop conversacional con autoevaluación
-🧬 Identidad consistente a lo largo del tiempo
-🧩 Arquitectura modular y escalable
-Arquitectura (visión general)
-El sistema está dividido en módulos desacoplados:
+## Description
 
-Core
+**Alexa System** is designed to create AIs that go beyond simple responses — systems capable of **maintaining coherence, learning from interactions, and evolving over time**.
 
-Orquestación del flujo conversacional
-Memory System
+The focus is not just on text generation, but on simulating internal processes such as memory, self-evaluation, cognitive traits, and emotional state.
 
-Gestión de contexto y persistencia
-Cognitive System (Traits)
+---
 
-Rasgos que afectan decisiones y respuestas
-Emotional System
+## Key Features
 
-Estado emocional dinámico
-Auto-Evaluation
+* 🧠 Trait-based cognitive system
+* 💾 Persistent memory (short and long-term)
+* ❤️ Integrated emotional system
+* 🔁 Conversational loop with self-evaluation
+* 🧬 Consistent identity over time
+* 🧩 Modular and scalable architecture
 
-Evaluación de respuestas y ajuste interno
-(Futuro) Time Awareness
+---
 
-Percepción temporal y eventos
-Flujo del sistema
-El usuario envía un input
-El sistema construye contexto (memoria + estado interno)
-Se activa el sistema cognitivo y emocional
-Se genera la respuesta
-Se ejecuta la autoevaluación
-Se actualiza la memoria
-Se ajustan los rasgos internos
-Demo
-⚠️ Esta versión pública muestra una implementación simplificada del sistema.
+## Architecture Overview
 
-Incluye:
+The system is structured into decoupled modules:
 
-Loop conversacional básico
-Ejemplo de memoria
-Simulación de estado interno
-Objetivo:
+* **Core**
 
-Demostrar arquitectura y comportamiento general
-No exponer la lógica completa del sistema
-Filosofía del proyecto
-Sistema Alexa está diseñado bajo tres principios:
+  * Conversational flow orchestration
 
-Separación de responsabilidades
-Evolución progresiva del sistema
-Coherencia en la identidad de la IA
-Estado del proyecto
-Arquitectura base definida
-Sistemas principales implementados
-Evolución en desarrollo
-Uso
-Este repositorio está pensado como:
+* **Memory System**
 
-Base conceptual
-Demostración técnica
-Referencia de arquitectura
-Nota
-“Alexa Enna” es una implementación específica construida sobre este sistema. Sistema Alexa funciona como la base general para múltiples instancias de IA.
+  * Context management and persistence
 
-Autor
-Desarrollado por Guillermo Solveyra Founder @ Arasaka Design
+* **Cognitive System (Traits)**
+
+  * Traits that influence decisions and responses
+
+* **Emotional System**
+
+  * Dynamic emotional state
+
+* **Self-Evaluation**
+
+  * Response analysis and internal adjustment
+
+* **(Future) Time Awareness**
+
+  * Temporal perception and event handling
+
+---
+
+## System Flow
+
+1. User input is received
+2. Context is built (memory + internal state)
+3. Cognitive and emotional systems are activated
+4. Response is generated
+5. Self-evaluation is executed
+6. Memory is updated
+7. Internal traits are adjusted
+
+---
+
+## Demo
+
+> ⚠️ This public version provides a simplified implementation.
+
+Includes:
+
+* Basic conversational loop
+* Memory example
+* Simulated internal state
+
+Purpose:
+
+* Demonstrate system architecture and behavior
+* Avoid exposing full internal logic
+
+---
+
+## Philosophy
+
+Alexa System is built on three core principles:
+
+* **Separation of concerns**
+* **Progressive system evolution**
+* **Consistency of AI identity**
+
+---
+
+## Project Status
+
+* Core architecture defined
+* Main systems implemented
+* Ongoing evolution
+
+---
+
+## Usage
+
+This repository is intended as:
+
+* Conceptual foundation
+* Technical demonstration
+* Architecture reference
+
+---
+
+## Note
+
+“Alexa Enna” is a specific implementation built on top of this system.
+Alexa System serves as a general foundation for multiple AI instances.
+
+---
+
+## Author
+
+Developed by Guillermo Solveyra
+Founder @ Arasaka Design
+
+---
