@@ -1,3 +1,10 @@
+# Alexa System
+
+![Status](https://img.shields.io/badge/status-active-success)
+![Architecture](https://img.shields.io/badge/architecture-modular-blue)
+![Language](https://img.shields.io/badge/language-TypeScript-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 🌐 Language: [English](README.md) | [Español](README_ES.md)
 
 ## 🚀 Overview
