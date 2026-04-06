@@ -1,3 +1,5 @@
+🌐 Language: [English](README.md) | [Español](README_ES.md)
+
 ## 🚀 Overview
 
 Alexa System is a modular architecture for building adaptive AI systems with:
