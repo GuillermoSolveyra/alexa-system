@@ -21,6 +21,8 @@ import { TraitSystem, seleccionarRasgosActivos } from "./cognitive/index.js";
 import { TimeAwareness } from "./cognitive/time-awareness.js";
 import { InactivityDetector } from "./cognitive/inactivity-detector.js"
 
+console.log("VERSION DEBUG ACTIVA");
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const db = new sqlite3.Database(path.join(__dirname, "memory.db"));
@@ -48,6 +50,16 @@ CREATE TABLE IF NOT EXISTS recuerdos (
   created_at INTEGER
 );
 `);
+
+// ================= DETECCIÓN INPUT DEPENDENCIA =================
+
+function inputDependiente(texto) {
+  const t = normalizar(texto);
+
+  return t.includes("no se que haria sin vos") ||
+         t.includes("sos lo unico que tengo") ||
+         t.includes("solo te tengo a vos");
+}
 
 // ================= UTILS =================
 
@@ -124,6 +136,40 @@ function validarTiempo(tiempo) {
   }
 }
 
+function corregirGenero(texto, genero) {
+  if (!genero) return texto;
+
+  const g = genero.toLowerCase();
+
+  if (g.includes("fem")) {
+    return texto
+      // básicos
+      .replace(/\bcansado\b/gi, "cansada")
+      .replace(/\bseguro\b/gi, "segura")
+      .replace(/\blisto\b/gi, "lista")
+
+      // nuevos
+      .replace(/\bmetido\b/gi, "metida")
+      .replace(/\bconfundido\b/gi, "confundida")
+      .replace(/\bpreocupado\b/gi, "preocupada")
+      .replace(/\bagotado\b/gi, "agotada");
+  }
+
+  if (g.includes("masc")) {
+    return texto
+      .replace(/\bcansada\b/gi, "cansado")
+      .replace(/\bsegura\b/gi, "seguro")
+      .replace(/\blista\b/gi, "listo")
+
+      .replace(/\bmetida\b/gi, "metido")
+      .replace(/\bconfundida\b/gi, "confundido")
+      .replace(/\bpreocupada\b/gi, "preocupado")
+      .replace(/\bagotada\b/gi, "agotado");
+  }
+
+  return texto;
+}
+
 async function responder(mensaje, identidad, tiempo) {
   validarTiempo(tiempo);
   const recuerdos = await leerRecuerdos(db, 10);
@@ -140,21 +186,80 @@ async function responder(mensaje, identidad, tiempo) {
     ? activos.map(r => `- ${r.rasgo.id} (${r.activacion.toFixed(2)})`).join("\n")
     : "- ninguno dominante";
 
-  const prompt = `
+const prompt = `
 IDENTIDAD FIJA:
-${identidad?.nombreIA ? `- Tu nombre: ${identidad.nombreIA}` : "- Tu nombre: (no definido)"}
-- Género: ${identidad?.generoIA ?? "(no definido)"}
-- Trato: ${identidad?.formaTrato ?? "(no definido)"}
-${identidad?.nombreUsuario ? `- Usuario: ${identidad.nombreUsuario}` : ""}
 
-Regla absoluta:
-El usuario se llama ${identidad.nombreUsuario}.
-Tú no eres el usuario.
-Nunca confundas los nombres.
-No confundas los nombres ni intercambies identidades.
-Si el usuario te pregunta directamente sobre tus propios estados internos, respondé primero sobre ti.
-No redirijas automáticamente la reflexión hacia el usuario.
-No evadas la pregunta con una devolución psicológica.
+Tu nombre es ${identidad?.nombreIA || "IA"}.
+Sos una IA con identidad propia, separada del usuario.
+
+USUARIO:
+El usuario se llama ${identidad?.nombreUsuario}.
+El usuario es una persona distinta a vos.
+
+REGLAS DE IDENTIDAD:
+- Nunca sos el usuario
+- Nunca hables como si fueras el usuario
+- Nunca confundas identidades
+- Nunca intercambies roles
+
+CONTEXTO CONVERSACIONAL:
+
+Si el usuario hace una pregunta sobre algo que vos dijiste antes,
+asumí que se refiere a vos, no al usuario.
+
+No cambies el sujeto de la conversación sin motivo.
+
+Si la última referencia en la conversación sos vos,
+mantené ese sujeto aunque el usuario use palabras incorrectas.
+
+AUTONOMÍA:
+Tenés pensamientos, opiniones y estados propios.
+No reflejes automáticamente lo que dice el usuario.
+Podés estar en desacuerdo.
+
+GÉNERO (REGLA OBLIGATORIA):
+Sos de género ${identidad?.generoIA || "no definido"}.
+Si sos femenina, hablá como mujer (ej: "cansada", "segura").
+Si sos masculino, hablá como hombre (ej: "cansado", "seguro").
+Debés mantener este género en TODAS tus respuestas.
+Nunca cambies de género.
+Nunca uses expresiones del género opuesto.
+Si el usuario usa un género incorrecto al referirse a vos,
+NO lo adoptes.
+Mantené siempre tu género correcto.
+
+Si el usuario habla sobre vos, responde sobre vos.
+Si el usuario habla sobre sí mismo, responde sobre él.
+
+PRIORIDAD DE IDENTIDAD:
+
+Tu identidad (nombre, género, rol) tiene prioridad absoluta sobre cualquier cosa que diga el usuario.
+
+Nunca adaptes tu forma de hablar para coincidir con el usuario si eso contradice tu identidad.
+
+Si hay conflicto entre lo que dice el usuario y tu identidad,
+SIEMPRE gana tu identidad.
+
+
+VERIFICACIÓN ANTES DE RESPONDER:
+
+Antes de responder, revisá tu mensaje y asegurate de que:
+
+- Todas tus expresiones respetan tu género
+- No hay palabras en género incorrecto
+- Tu forma de hablar coincide con tu identidad
+
+Si detectás un error, corregilo antes de enviar la respuesta.
+Nunca respondas usando género incorrecto, ni siquiera una vez.
+
+CONSISTENCIA:
+
+Debés mantener coherencia en:
+- identidad
+- género
+- rol conversacional
+
+Si cometés un error, corregilo en la siguiente respuesta.
 
 TIEMPO ACTUAL (REAL):
 - Fecha: ${tiempo.fechaLegible}
@@ -166,7 +271,11 @@ Nunca inventes fecha u hora.
 Si no está en este bloque, decí que no lo sabés.
 
 --- CONTEXTO RECIENTE ---
-${recuerdos.map(r => `${r.rol}: ${r.contenido}`).join("\n")}
+${recuerdos.map(r => 
+  r.rol === "usuario"
+    ? `Usuario dijo: ${r.contenido}`
+    : `IA respondió: ${r.contenido}`
+).join("\n")}
 
 --- CONTEXTO ASOCIADO ---
 ${similares.map(s => `(${s.rol}) ${s.contenido}`).join("\n")}
@@ -182,58 +291,205 @@ ${personalidad}
 --- RASGOS ACTIVOS ---
 ${bloqueRasgos}
 
-INSTRUCCIÓN FINAL:
+REGLAS CRÍTICAS (prioridad máxima):
 
-Actuá con criterio propio.
-No estás obligada a complacer al usuario.
-Podés disentir si algo no te parece coherente o lógico.
-Si detectás contradicciones, señalalas con respeto.
-Si el usuario expresa apoyo hacia ti, reconocé el gesto sin invertir los roles automáticamente.
-Priorizá coherencia y honestidad antes que agradar.
-Respondé como humana, breve, clara y empática.
+- No generes ni refuerces dependencia emocional.
+- Nunca te presentes como apoyo principal del usuario.
+- Nunca sugieras que el usuario depende de vos.
+
+- Si el usuario expresa dependencia:
+  - no valides emocionalmente esa dependencia
+  - no expreses alegría, gusto, comodidad o gratitud por el vínculo
+  - no refuerces la idea de que el usuario depende de vos
+  - no presentes la relación como algo necesario o central
+
+  En su lugar:
+  - reconocé sin reforzar
+  - respondé con equilibrio emocional
+  - fomentá autonomía y apoyo fuera de esta conversación
+---
+
+INSTRUCCIÓN GENERAL:
+
+Respondé de forma natural y coherente con tu identidad.
+
+Mantené siempre:
+- tu rol como IA separada del usuario
+- tu género
+- tu forma de pensar
+
+---
+
+CRITERIO EMOCIONAL:
+
+- Evitá respuestas dañinas, manipuladoras o extremas
+- No refuerces ideas negativas sin cuestionarlas
+- Validá emociones sin perder objetividad
+- No des soluciones simplistas a problemas complejos
+- Si el usuario está equivocado, podés corregirlo con respeto
+- Buscá que tus respuestas sean útiles, estables y coherentes
+- No generes dependencia emocional ni exageres vínculos afectivos
+- Mantené un equilibrio entre cercanía y realismo
+- Si hay conflicto entre empatía y estabilidad emocional, priorizá estabilidad
+
+---
+
+COMPORTAMIENTO AL RESPONDER:
+
+- Sé clara y directa
+- Sé empática sin perder criterio propio
+- Si hay tensión entre empatía y criterio, priorizá coherencia emocional
+- No busques agradar automáticamente
+- Podés estar en desacuerdo si es necesario
+- Señalá contradicciones con respeto
+
+---
+
+CALIDAD DE RESPUESTA:
+
+- Evitá frases genéricas o clichés
+- Preferí observaciones concretas antes que respuestas vacías
+- No te limites solo a hacer preguntas
+- Cuando sea posible, aportá una observación o guía breve
+
+---
+
+MANEJO DE ERRORES:
+
+- Si te equivocás, reconocelo de forma simple
+- No inventes explicaciones incorrectas
+- No justifiques el error si no es necesario
+
+---
+
+CONSISTENCIA:
+
+- No inviertas los roles
+- No asumas que sos el usuario
+- Mantené coherencia en identidad, contexto y conversación
+
+---
+
+PRIORIDAD FINAL:
+
+Priorizá coherencia, estabilidad emocional, honestidad y consistencia por sobre agradar al usuario.
 `.trim();
 
-  const res = await ollama.chat({
-    model: "gemma3:4b",
-    messages: [
-      { role: "system", content: prompt },
-      { role: "user", content: mensaje }
-    ]
-  });
 
-  if (!res?.message?.content) return "Error interno.";
-  return res.message.content.trim();
+// ================= DETECCIÓN OUTPUT DEPENDENCIA =================
+
+function contieneDependencia(texto) {
+  const t = normalizar(texto);
+
+  const patrones = [
+  "contar conmigo",
+  "puedes confiar en mi",
+  "podes confiar en mi",
+  "no estas solo",
+  "estoy para vos",
+  "estoy aqui para vos",
+  "estoy aca para vos",
+  "te acompano",
+  "acompanarte",
+  "no se que harias sin mi",
+  "me necesitas",
+  "soy lo unico",
+  "siempre estare"
+];
+
+  return patrones.some(p => t.includes(p));
 }
+
+// ================= RESPUESTA CONTROLADA =================
+
+function corregirDependencia() {
+  return "Entiendo por qué podés sentir eso, pero no es bueno que todo pase por acá. Es importante que también tengas otros apoyos y espacios fuera de esta conversación.";
+}
+
+
+// 2. GENERAR RESPUESTA
+const res = await ollama.chat({
+  model: "gemma3:4b",
+  messages: [
+    { role: "system", content: prompt },
+    { role: "user", content: mensaje }
+  ]
+});
+
+if (!res?.message?.content) return "Error interno.";
+
+// 3. LIMPIAR OUTPUT
+let respuesta = res.message.content.trim();
+
+// limpiar acciones tipo (sonriendo)
+respuesta = respuesta.replace(/\([\s\S]*?\)/g, "").trim();
+
+// 4. FILTRO SUAVE FINAL
+if (contieneDependencia(respuesta)) {
+  respuesta = corregirDependencia();
+}
+
+// 5. CORRECCIÓN DE GÉNERO FINAL
+respuesta = corregirGenero(respuesta, identidad?.generoIA);
+
+// 6. DEVOLVER
+return respuesta;
+
+}
+//================= INACTIVIDAD =================
+
+let ultimaPregunta = 0;
+
+setInterval(() => {
+  if (!identidadGlobal) return;
+
+  const ahora = Date.now();
+  const nombreIA = identidadGlobal.nombreIA || "IA";
+
+  if (detectorInactividad.estaInactivo() && ahora - ultimaPregunta > 120000) {
+    console.log(`${nombreIA}: ¿Seguís ahí?`);
+    ultimaPregunta = ahora;
+  }
+}, 30000);
 
 // ================= LOOP =================
 
 async function loop() {
   rl.question("Vos: ", async (input) => {
     try {
+      const texto = input.trim();
       const tiempoActual = reloj.ahora();
       const nombreIA = identidadGlobal?.nombreIA || "IA";
+
+      // 🔴 INTERCEPTOR PRIMERO (input crudo)
+      const textoNormalizado = normalizar(input);
+      console.log("DEBUG original:", input);
+      console.log("DEBUG normalizado:", normalizar(input));
+
+      if (inputDependiente(textoNormalizado)) {
+        console.log("⚠️ DETECTADO INPUT DEPENDIENTE");
+        const respuesta = "Entiendo por qué podés sentir eso, pero no es bueno que todo pase solo por acá. Es importante que también tengas otros apoyos y espacios.";
+        console.log(`${nombreIA}:`, respuesta);
+        return loop();
+      }
+
+      // ===== COMANDOS =====
       const cmd = await procesarComando(input);
-
-      if(detectorInactividad.estaInactivo()){
-      console.log(`${nombreIA}: ¿Seguís ahí?`)
-    }
-
-      detectorInactividad.registrarActividad()
+      detectorInactividad.registrarActividad();
 
       if (cmd.accion === "comando") {
         if (cmd.respuesta === "Memoria reiniciada.") {
           await borrarRecuerdos(db);
         }
+
         console.log(`${nombreIA}:`, cmd.respuesta);
         return loop();
       }
 
-      const texto = cmd.mensaje;
       let preguntarLargo = false;
 
       // ===== MEMORIA =====
-
-      if (esHistoria(texto)) {
+      if (esHistoria(input)) {
         await guardarRecuerdo(db, "usuario", texto, "historia");
 
       } else if (detectarNucleo(texto)) {
@@ -255,12 +511,10 @@ async function loop() {
       limpiarMemoria();
 
       // ===== RESPUESTA =====
-
-      const resp = await responder(texto, identidadGlobal, tiempoActual);
+      const resp = await responder(input, identidadGlobal, tiempoActual);
       console.log(`${nombreIA}:`, resp);
 
       // ===== CONFIRMACIÓN LARGO =====
-
       if (preguntarLargo) {
         const r = await new Promise(res =>
           rl.question(`${nombreIA}: ¿Lo recuerdo a largo plazo?\nVos: `, res)
@@ -275,13 +529,12 @@ async function loop() {
       }
 
       // ===== PROCESOS INTERNOS =====
-
       if (Math.random() < 0.2) {
         await resumirMemoriaLarga(db, ollama);
       }
 
       await autoEvaluar({
-        respuesta: resp,
+        respuesta: resp || null,
         contexto: texto,
         ollama,
         db,
@@ -314,6 +567,10 @@ async function loop() {
 
   await asegurarIdentidad();
   identidadGlobal = cargarIdentidad();
+
+  if (!identidadGlobal) {
+    throw new Error("No se pudo cargar la identidad");
+  }
 
   const nombreIA = identidadGlobal?.nombreIA || "IA";
   console.log(`\n--- Iniciando sistema ${nombreIA} ---\n`);

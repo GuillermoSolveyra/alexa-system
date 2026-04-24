@@ -4,8 +4,9 @@
   "type": "module",
   "main": "alexa-core.js",
   "scripts": {
-    "start": "node dist/chat-loop.js"
-  },
+  "build": "tsc",
+  "start": "npm run build && node dist/chat-loop.js"
+},
   "dependencies": {
     "ollama": "^0.6.3",
     "sqlite3": "^5.0.2"
