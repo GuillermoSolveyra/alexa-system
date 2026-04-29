@@ -8,9 +8,9 @@
     "lib": ["es2022"],
     "strict": true,
     "skipLibCheck": true,
-
     "allowJs": true,
-    "checkJs": false
+    "checkJs": false,
+    "noEmitOnError": true
   },
   "include": ["src/**/*"]
 }

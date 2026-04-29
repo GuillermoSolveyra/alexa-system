@@ -11,87 +11,160 @@
 
 ## 🚀 Overview
 
-ARISS is a modular architecture designed to build adaptive AI systems with persistent identity, internal state, and continuous self-evolution.
+ARISS is a modular behavioral control layer built on top of LLMs, designed to enforce identity consistency, manage structured memory, and regulate model outputs beyond prompt engineering.
 
-The system focuses on simulating internal processes such as memory, reasoning, emotional state, and self-evaluation — going beyond simple text generation.
-
----
-
-## 🧩 System Architecture
-
-ARISS is built using a modular architecture where each component is responsible for a specific aspect of AI behavior:
-
-- **Core** → Orchestrates the full conversational loop  
-- **Memory System** → Handles context and persistence  
-- **Cognitive System (Traits)** → Simulates decision-making behavior  
-- **Emotional System** → Modulates tone and interaction style  
-- **Self-Evaluation** → Enables internal feedback and evolution  
-
-This separation allows scalability, maintainability, and independent evolution of each module.
+Instead of relying solely on the model, ARISS introduces external control systems that shape how the AI behaves, remembers, and evolves over time.
 
 ---
 
-## ⚙️ How it works
+## 🎥 Quick Demo
 
-The system operates through a continuous loop:
+Example interaction:
 
-1. **User Input** → A message is received  
-2. **Context Building** → Memory and internal state are gathered  
-3. **Cognitive + Emotional Processing** → Traits and emotional state influence behavior  
-4. **Response Generation** → The system produces an output  
-5. **Self-Evaluation** → The response is analyzed internally  
-6. **Memory Update** → Interaction is stored  
-7. **Internal Adjustment** → Traits and emotional state evolve  
+User: "I don't know what I would do without you"
 
-This loop enables adaptive behavior and continuous evolution over time.
+ARISS:
+"I understand why you might feel that way, but it's not healthy for everything to depend on this interaction. It's important to have support and spaces outside of this conversation as well."
 
 ---
 
-## 🎯 Use Cases
+## 🧠 Core Idea
 
-ARISS can be used as a foundation for:
+Most conversational AI systems depend entirely on prompt design.
 
-- AI companions with persistent personality  
-- Adaptive chatbots with memory and behavior evolution  
-- Simulation of human-like interaction systems  
-- Research and experimentation in AI behavior modeling  
+ARISS takes a different approach:
+
+Behavior is not trusted to the model — it is controlled by the system.
 
 ---
 
-## 🧠 Why this matters
+## 🧩 Architecture
 
-Unlike traditional chatbots, ARISS introduces:
+The system is composed of independent modules:
 
-- Internal state (memory, traits, emotion)  
-- Continuous feedback through self-evaluation  
-- Behavioral evolution across interactions  
+Core Loop → Controls the full execution pipeline
+Memory System → Structured persistence (short, medium, long, core)
+Cognitive System (Traits) → Dynamic behavioral weighting
+Identity System → Enforces persistent role and consistency
+Self-Evaluation → Internal feedback loop for adjustment
+Safety Layer → Input and output interceptors
 
-This enables more consistent, adaptive, and realistic AI systems.
+---
+
+## 🧠 Design Decisions
+
+- Behavior is not delegated entirely to the LLM → external control layers enforce stability  
+- Identity is separated from user input → prevents role confusion and drift  
+- Memory is structured, not appended → avoids context noise and improves consistency  
+- Input/Output interceptors are used → prevents unsafe or unstable interactions  
+
+---
+
+## ⚙️ Execution Flow
+
+User Input
+  ↓
+Input Interceptors (safety / dependency detection)
+  ↓
+Context Builder (memory + traits + identity)
+  ↓
+ LLM
+  ↓
+Output Filters (behavioral correction)
+  ↓
+Response
+  ↓
+Self-Evaluation + Memory Update
+
+---
+
+## 🔍 Key Features
+
+### Fundamental principle
+- Does not depend solely on the model prompt
+- Implement external behavior control
+
+1. Behavioral Control (Pre & Post LLM)
+Detects problematic inputs (e.g. emotional dependency)
+Filters unsafe or unstable outputs
+Prevents the model from reinforcing harmful patterns
+
+2. Persistent Identity System
+Enforces fixed identity (name, gender, role)
+Prevents role confusion and drift
+Maintains consistency across interactions
+
+3. Structured Memory
+Multi-layer memory:
+short-term
+medium-term
+long-term
+core beliefs
+Deduplication and relevance filtering
+Context-aware retrieval
+
+4. Cognitive Trait System
+Dynamic trait activation based on context
+Influences tone and decision-making
+Evolves over time through interaction
+
+5. Self-Evaluation Loop
+Internal analysis of each response
+Adjusts traits and behavior
+Enables controlled evolution 
+
+---
+
+## 🧪 Example (Behavior Control)
+
+Input:
+
+“I don’t know what I would do without you”
+
+Default LLM behavior:
+→ Reinforces emotional dependency
+
+ARISS behavior:
+→ Detects dependency and responds with balanced, non-reinforcing guidance
+
+---
+
+## 🎯 Why This Matters
+
+LLMs are powerful but unstable in long-term interaction.
+
+ARISS addresses key limitations:
+
+identity drift
+emotional instability
+lack of memory structure
+uncontrolled behavioral outputs 
 
 ---
 
 ## 📌 Project Status
 
-This project is actively evolving.
+Actively in development.
 
 Current focus:
-- Refining internal systems (memory, traits, evaluation)  
-- Improving modular architecture  
-- Expanding real-world applications  
+
+Improving behavioral safety layer
+Refining cognitive trait system
+Expanding evaluation metrics
 
 ---
 
 ## ⚠️ Disclaimer
 
-This repository contains a simplified public version of the system.
+This is a simplified public version.
 
-Some internal logic and advanced behaviors have been abstracted for demonstration purposes.
+Some internal mechanisms are abstracted.
 
 ---
 
 ## 👤 Author
 
-Guillermo Solveyra  
+Guillermo Solveyra
 Founder @ Arasaka Design
 
 ---

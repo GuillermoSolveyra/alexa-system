@@ -11,81 +11,153 @@
 
 ## 🚀 Descripción general
 
-ARISS es una arquitectura modular diseñada para construir sistemas de IA adaptativos con identidad persistente, estado interno y autoevolución continua.
+ARISS es una capa de control de comportamiento modular construida sobre LLM, diseñada para imponer la coherencia de la identidad, gestionar la memoria estructurada y regular los resultados del modelo más allá de la ingeniería de prompts.
 
-El sistema se centra en simular procesos internos como la memoria, el razonamiento, el estado emocional y la autoevaluación, yendo más allá de la simple generación de texto.
+En lugar de depender únicamente del modelo, ARISS introduce sistemas externos que controlan y restringen el comportamiento del modelo, asegurando coherencia, estabilidad y seguridad en la interacción.
+---
 
---
+## 🎥 Demostración rápida
 
-## 🧩 Arquitectura del sistema
+Ejemplo de interacción:
 
-ARISS se basa en una arquitectura modular donde cada componente se encarga de un aspecto específico del comportamiento de la IA:
+Usuario: "No sé qué haría sin ti"
 
-- **Núcleo** → Orquesta el ciclo conversacional completo
-- **Sistema de memoria** → Gestiona el contexto y la persistencia
-- **Sistema cognitivo (rasgos)** → Simula el comportamiento de toma de decisiones
-- **Sistema emocional** → Modula el tono y el estilo de interacción
-- **Autoevaluación** → Permite la retroalimentación y la evolución internas
-
-Esta separación permite la escalabilidad, el mantenimiento y la evolución independiente de cada módulo.
+ARISS:
+"Entiendo por qué puedes sentirte así, pero no es saludable que todo dependa de esta interacción. También es importante tener apoyo y espacios fuera de esta conversación".
 
 ---
 
-## ⚙️ Cómo funciona
+## 🧠 Idea central
 
-El sistema opera mediante un ciclo continuo:
+La mayoría de los sistemas de IA conversacionales dependen completamente de un diseño de prompts
 
-1. **Entrada del usuario** → Se recibe un mensaje
-2. **Construcción de contexto** → Se recopilan la memoria y el estado interno
-3. **Procesamiento cognitivo y emocional** → Los rasgos y el estado emocional influyen en el comportamiento
-4. **Generación de respuesta** → El sistema produce una salida
-5. **Autoevaluación** → La respuesta se analiza internamente
-6. **Actualización de memoria** → Se almacena la interacción
-7. **Ajuste interno** → Los rasgos y el estado emocional evolucionan
+ARISS adopta un enfoque diferente:
 
-Este ciclo permite un comportamiento adaptativo y una evolución continua a lo largo del tiempo.
+El comportamiento no se confía al modelo, sino que lo controla el sistema.
 
 ---
 
-## 🎯 Casos de uso
+## 🧩 Arquitectura
 
-ARISS puede servir de base para:
+El sistema está compuesto por módulos independientes:
 
-- Compañeros de IA con personalidad persistente
-- Chatbots adaptativos con memoria y evolución del comportamiento
-- Simulación de sistemas de interacción similares a los humanos
-- Investigación y experimentación en modelado del comportamiento de la IA
+- Core Loop → Controla el proceso de ejecución completo  
+- Sistema de memoria → Persistencia estructurada (corta, media, larga, núcleo)  
+- Sistema cognitivo (rasgos) → Ponderación conductual dinámica  
+- Sistema de identidad → Garantiza coherencia y rol persistente  
+- Autoevaluación → Bucle de retroalimentación interna  
+- Capa de seguridad → Interceptores de entrada y salida  
 
 ---
 
-## 🧠 Por qué es importante
+## 🧠 Decisiones de diseño
 
-A diferencia de los chatbots tradicionales, ARISS introduce:
+- El comportamiento no se delega completamente al LLM → las capas de control externo imponen la estabilidad
+- La identidad está separada de la entrada del usuario → evita la confusión y la deriva de roles
+- La memoria está estructurada, no agregada → evita el ruido del contexto y mejora la coherencia
+- Se utilizan interceptores de entrada/salida → previene interacciones inseguras o inestables
 
-- Estado interno (memoria, rasgos, emoción)
-- Retroalimentación continua mediante autoevaluación
-- Evolución del comportamiento a través de las interacciones
+---
 
-Esto permite sistemas de IA más consistentes, adaptativos y realistas.
+## ⚙️ Flujo de ejecución
+
+Entrada del usuario  
+↓  
+Interceptores de entrada (seguridad/detección de dependencia)  
+↓  
+Context Builder (memoria + rasgos + identidad)  
+↓  
+LLM  
+↓  
+Filtros de salida (corrección y estabilización del comportamiento)  
+↓  
+Respuesta  
+↓  
+Autoevaluación + Actualización de Memoria  
+
+---
+
+## 🔍 Características clave
+
+### Principio fundamental
+- No depende únicamente del prompt del modelo
+- Implementa control externo del comportamiento
+
+1. Control del comportamiento (antes y después del LLM)
+Detecta entradas problemáticas (por ejemplo, dependencia emocional)
+Filtra salidas inseguras o inestables
+Evita que el modelo refuerce patrones dañinos.
+
+2. Sistema de identidad persistente
+Hace cumplir una identidad fija (nombre, género, rol)
+Previene la confusión y la deriva de roles
+Mantiene la coherencia en todas las interacciones.
+
+3. Memoria estructurada
+Memoria multicapa:
+a corto plazo
+mediano plazo
+a largo plazo
+núcleo (memoria estructural)
+Deduplicación y filtrado de relevancia
+Recuperación consciente del contexto
+
+4. Sistema de rasgos cognitivos
+Activación dinámica de rasgos basada en el contexto.
+Influye en el tono y la toma de decisiones.
+Evoluciona con el tiempo a través de la interacción.
+
+5. Bucle de autoevaluación
+Análisis interno de cada respuesta.
+Ajusta los rasgos y el comportamiento.
+Permite una evolución controlada
+
+---
+
+## 🧪 Ejemplo (Control de comportamiento)
+
+Entrada:
+
+“No sé qué haría sin ti”
+
+Comportamiento LLM predeterminado:
+→ Refuerza la dependencia emocional
+
+Comportamiento de ARISS:
+→ Detecta dependencia y responde con orientación equilibrada y no reforzante.
+
+---
+
+## 🎯 Por qué esto es importante
+
+Los LLM son poderosos pero inestables en la interacción a largo plazo.
+
+ARISS aborda limitaciones clave:
+
+deriva de identidad
+inestabilidad emocional
+falta de estructura de memoria
+salidas conductuales no controladas
 
 ---
 
 ## 📌 Estado del proyecto
 
-Este proyecto se encuentra en constante desarrollo.
+Activamente en desarrollo.
 
 Enfoque actual:
-- Refinamiento de los sistemas internos (memoria, rasgos, evaluación)
-- Mejora de la arquitectura modular
-- Ampliación de las aplicaciones prácticas
+
+Mejora de la capa de seguridad conductual
+Refinando el sistema de rasgos cognitivos
+Ampliar las métricas de evaluación
 
 ---
 
-## ⚠️ Aviso legal
+## ⚠️ Descargo de responsabilidad
 
-Este repositorio contiene una versión pública simplificada del sistema.
+Esta es una versión pública simplificada.
 
-Se han abstraído algunos aspectos de la lógica interna y comportamientos avanzados con fines demostrativos.
+Algunos mecanismos internos se abstraen.
 
 ---
 

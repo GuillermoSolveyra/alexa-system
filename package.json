@@ -5,7 +5,7 @@
   "main": "alexa-core.js",
   "scripts": {
   "build": "tsc",
-  "start": "npm run build && node dist/chat-loop.js"
+  "start": "tsc && node dist/chat-loop.js"
 },
   "dependencies": {
     "ollama": "^0.6.3",
