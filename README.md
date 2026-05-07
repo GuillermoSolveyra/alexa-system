@@ -115,6 +115,13 @@ Enables controlled evolution
 
 ---
 
+## ▶️ Quick Start
+
+npm install
+npm run demo
+
+---
+
 ## 🧪 Example (Behavior Control)
 
 Input:

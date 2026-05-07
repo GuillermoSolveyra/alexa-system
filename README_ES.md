@@ -113,6 +113,12 @@ Ajusta los rasgos y el comportamiento.
 Permite una evolución controlada
 
 ---
+## ▶️ Inicio rápido
+
+npm install
+npm run demo
+
+---
 
 ## 🧪 Ejemplo (Control de comportamiento)
 

@@ -21,7 +21,12 @@ import { TraitSystem, seleccionarRasgosActivos } from "./cognitive/index.js";
 import { TimeAwareness } from "./cognitive/time-awareness.js";
 import { InactivityDetector } from "./cognitive/inactivity-detector.js"
 
-console.log("VERSION DEBUG ACTIVA");
+const isMainModule =
+  process.argv[1] === fileURLToPath(import.meta.url);
+
+if (isMainModule) {
+  console.log("VERSION DEBUG ACTIVA");
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -170,7 +175,7 @@ function corregirGenero(texto, genero) {
   return texto;
 }
 
-async function responder(mensaje, identidad, tiempo) {
+export async function responder(mensaje, identidad, tiempo) {
   validarTiempo(tiempo);
   const recuerdos = await leerRecuerdos(db, 10);
   const similares = await buscarSimilares(mensaje);
@@ -561,23 +566,23 @@ async function loop() {
 
 // ================= INIT =================
 
-(async () => {
+if (process.argv[1].includes("chat-loop")) {
+  (async () => {
+    await cargarRasgosDesdeDB(db, traitSystem);
 
-  await cargarRasgosDesdeDB(db, traitSystem);
+    await asegurarIdentidad();
+    identidadGlobal = cargarIdentidad();
 
-  await asegurarIdentidad();
-  identidadGlobal = cargarIdentidad();
+    if (!identidadGlobal) {
+      throw new Error("No se pudo cargar la identidad");
+    }
 
-  if (!identidadGlobal) {
-    throw new Error("No se pudo cargar la identidad");
-  }
+    const nombreIA = identidadGlobal?.nombreIA || "IA";
+    console.log(`\n--- Iniciando sistema ${nombreIA} ---\n`);
 
-  const nombreIA = identidadGlobal?.nombreIA || "IA";
-  console.log(`\n--- Iniciando sistema ${nombreIA} ---\n`);
-
-  loop();
-
-})();
+    loop();
+  })();
+}
 
 
 
