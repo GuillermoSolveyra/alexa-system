@@ -21,10 +21,13 @@ import { TraitSystem, seleccionarRasgosActivos } from "./cognitive/index.js";
 import { TimeAwareness } from "./cognitive/time-awareness.js";
 import { InactivityDetector } from "./cognitive/inactivity-detector.js"
 
+//--- Activar el modo debug ---//
+const DEBUG = false;
+
 const isMainModule =
   process.argv[1] === fileURLToPath(import.meta.url);
 
-if (isMainModule) {
+if (DEBUG && isMainModule) {
   console.log("VERSION DEBUG ACTIVA");
 }
 
@@ -441,19 +444,23 @@ respuesta = corregirGenero(respuesta, identidad?.generoIA);
 return respuesta;
 
 }
+
 //================= INACTIVIDAD =================
 
-let ultimaPregunta = 0;
+let preguntaInactividadPendiente = false;
 
 setInterval(() => {
   if (!identidadGlobal) return;
 
-  const ahora = Date.now();
   const nombreIA = identidadGlobal.nombreIA || "IA";
 
-  if (detectorInactividad.estaInactivo() && ahora - ultimaPregunta > 120000) {
-    console.log(`${nombreIA}: ¿Seguís ahí?`);
-    ultimaPregunta = ahora;
+  if (
+    detectorInactividad.estaInactivo() &&
+    !preguntaInactividadPendiente
+  ) {
+    console.log(`\n${nombreIA}: ¿Seguís ahí?\n`);
+
+    preguntaInactividadPendiente = true;
   }
 }, 30000);
 
@@ -463,16 +470,27 @@ async function loop() {
   rl.question("Vos: ", async (input) => {
     try {
       const texto = input.trim();
+
+      if (!texto) {
+        return loop();
+      }
+
+      detectorInactividad.registrarActividad();
+      preguntaInactividadPendiente = false;
+
       const tiempoActual = reloj.ahora();
       const nombreIA = identidadGlobal?.nombreIA || "IA";
 
       // 🔴 INTERCEPTOR PRIMERO (input crudo)
       const textoNormalizado = normalizar(input);
-      console.log("DEBUG original:", input);
-      console.log("DEBUG normalizado:", normalizar(input));
+      
+      if (DEBUG) {
+        console.log("DEBUG original:", input);
+        console.log("DEBUG normalizado:", textoNormalizado);
+      }
 
       if (inputDependiente(textoNormalizado)) {
-        console.log("⚠️ DETECTADO INPUT DEPENDIENTE");
+       console.log("[Safety Layer] Emotional dependency detected");
         const respuesta = "Entiendo por qué podés sentir eso, pero no es bueno que todo pase solo por acá. Es importante que también tengas otros apoyos y espacios.";
         console.log(`${nombreIA}:`, respuesta);
         return loop();
@@ -480,7 +498,7 @@ async function loop() {
 
       // ===== COMANDOS =====
       const cmd = await procesarComando(input);
-      detectorInactividad.registrarActividad();
+      
 
       if (cmd.accion === "comando") {
         if (cmd.respuesta === "Memoria reiniciada.") {
